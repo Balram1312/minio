@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Integration Demo</title>
+    <style>
+        /* Basic CSS for layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .response {
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>API Integration Demo</h1>
+
+        <h2>List Buckets</h2>
+        <button onclick="listBuckets()">List Buckets</button>
+        <div id="buckets" class="response"></div>
+
+        <h2>List Objects in Bucket</h2>
+        <label for="bucketName">Enter Bucket Name:</label>
+        <input type="text" id="bucketNameInput">
+        <button onclick="listObjects()">List Objects</button>
+        <div id="objects" class="response"></div>
+
+        <h2>Get Object Presigned URL</h2>
+        <label for="bucketName">Bucket Name:</label>
+        <select id="bucketNameSelect" onchange="populateObjects()">
+            <!-- Options will be populated dynamically -->
+        </select>
+        <label for="objectName">Object Name:</label>
+        <select id="objectNameSelect">
+            <!-- Options will be populated dynamically -->
+        </select>
+        <button onclick="getPresignedUrl()">Get Presigned URL</button>
+        <div id="presignedUrl" class="response">
+            <!-- Presigned URL and download button will be inserted here -->
+        </div>
+
+        <h2>Upload Object to Bucket</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="file">Choose a file:</label>
+            <input type="file" id="fileInput" name="file">
+            <br>
+            <label for="bucketNameUpload">Bucket Name:</label>
+            <input type="text" id="bucketNameUploadInput" name="bucketName">
+            <br>
+            <button type="submit">Upload File</button>
+        </form>
+        <div id="uploadStatus" class="response"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

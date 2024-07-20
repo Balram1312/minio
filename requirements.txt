@@ -1,0 +1,56 @@
+Step 1:
+mkdir -p ~/minio/data
+docker run \
+   -p 9000:9000 \
+   -p 9001:9001 \
+   --name minio \
+   -v ~/minio/data:/data \
+   -e "MINIO_ROOT_USER=ROOTNAME" \
+   -e "MINIO_ROOT_PASSWORD=CHANGEME123" \
+   quay.io/minio/minio server /data --console-address ":9001"
+
+Step 2: login using these url's
+    API: http://172.17.0.2:9000  http://127.0.0.1:9000 
+    WebUI: http://172.17.0.2:9001 http://127.0.0.1:9001 
+
+Step 3: It will redirect to the login page then insert defined user password while container creation.
+
+Step 4: Create access tokens:
+    UI -> User -> Access Keys -> Create Acess Key
+    Create Access Key
+    Access key: XPvtgouHaU0bvyRsXqcz
+    Secret Key: KNwJUZvyG3qrlIQQ27Iu37EfoMaBgufNOnGPjY9x
+
+    [enable/disable]You can specify an optional JSON-formatted IAM policy to further restrict Access Key access to a subset of the actions and resources explicitly allowed for the parent user. Additional access beyond that of the parent user cannot be implemented through these policies.
+   
+    Expiry : 31 July 2024 01:00
+    Name: demo_access_key
+    Description: demo access purpose
+    Comments: Enter a comment
+
+
+    *Note: Process will end with downlading the credentials.json file while will contain secret key and access key
+    {
+        "url":"http://127.0.0.1:9001/api/v1/service-account-credentials",
+        "accessKey":"XPvtgouHaU0bvyRsXqcz",
+        "secretKey":"KNwJUZvyG3qrlIQQ27Iu37EfoMaBgufNOnGPjY9x",
+        "api":"s3v4",
+        "path":"auto"
+    }
+
+Step 5: Create A Bucket for object storage.
+
+    1. MinIO uses buckets to organize objects. A bucket is similar to a folder or directory in a filesystem, where each bucket can hold an arbitrary number of objects.
+    2. Versioning allows to keep multiple versions of the same object under the same key.
+    3. Object Locking prevents objects from being deleted. Required to support retention and legal hold. Can only be enabled at bucket creation.
+    4. Quota limits the amount of data in the bucket.
+    5. Retention imposes rules to prevent object deletion for a period of time. Versioning must be enabled in order to set bucket retention policies
+
+    Bucker Name: public-demo-bucket
+    Features:
+        Versioning: enabled
+        Object Locking: enabled   
+        Quota: disabled
+        Retention: enabled
+        Mode: Compliance/Governance -> Compliance
+        Validity: 180 Days
