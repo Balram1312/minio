@@ -30,6 +30,8 @@ func main() {
 
 	c := gin.Default()
 
+	log.Println("before middleware...")
+
 	// Enable CORS middleware
 	c.Use(corsMiddleware())
 
